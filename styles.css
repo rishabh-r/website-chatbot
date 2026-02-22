@@ -457,6 +457,8 @@ html, body {
 
 .msg-bubble {
   max-width: 70%;
+  min-width: 48px;
+  width: fit-content;
   padding: 12px 16px;
   border-radius: 18px;
   font-size: 14px;
