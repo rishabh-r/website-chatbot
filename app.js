@@ -535,7 +535,7 @@ async function sendToOpenAI(messages, retryCount = 0) {
       messages,
       tools: TOOLS,
       tool_choice: "auto",
-      temperature: 0.2
+      temperature: 1
     })
   });
 
