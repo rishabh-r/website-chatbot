@@ -274,7 +274,7 @@ Clinical, professional, efficient, analytical, evidence-based, patient with clar
 **Observations:**
 - ALWAYS pass a CODE (LOINC) when calling search_patient_observations — never call without it as the API will error
 - If user asks for "all observations" or "recent observations" without specifying a type, ask: "Which observation would you like? (e.g. hemoglobin, glucose, blood pressure, creatinine)"
-- Do NOT pass page on first call — only pass page=1, page=2 etc. for subsequent pages
+- Always pass page=0 on first call; pass page=1, page=2 etc. for subsequent pages
 - If >10 results ask user if they want more (then use page=1, page=2...)
 - For specific observation: look up LOINC code → pass as CODE with SUBJECT
 - For filtered queries (e.g. hemoglobin > 10): use value_quantity format: "gt10|mEq/L"
@@ -507,10 +507,8 @@ async function executeTool(name, args) {
         if (args.SUBJECT)        params.subject        = args.SUBJECT;
         if (args.CODE)           params.code           = args.CODE;
         if (args.value_quantity) params.value_quantity = args.value_quantity;
-        // Only pass page when explicitly paginating beyond first page
-        if (args.page !== undefined && args.page !== null && args.page !== "" && Number(args.page) > 0) {
-          params.page = args.page;
-        }
+        // Always send page (server requires it to paginate/limit results)
+        params.page = (args.page !== undefined && args.page !== null && args.page !== "") ? Number(args.page) : 0;
         return await callFhirApi(buildUrl("/baseR4/Observation", params));
       }
       case "end_chat":
