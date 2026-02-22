@@ -509,7 +509,7 @@ async function executeTool(name, args) {
         if (args.value_quantity) params.value_quantity = args.value_quantity;
         // Always send page (server requires it to paginate/limit results)
         params.page = (args.page !== undefined && args.page !== null && args.page !== "") ? Number(args.page) : 0;
-        return await callFhirApi(buildUrl("/baseR4/Observation", params));
+        return await callFhirApi(buildUrl("/baseR4/Observations", params));
       }
       case "end_chat":
         return { status: "conversation_ended" };
