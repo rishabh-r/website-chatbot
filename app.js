@@ -734,6 +734,7 @@ function appendMessage(role, text) {
   const wrapper = document.createElement("div");
   wrapper.style.display = "flex";
   wrapper.style.flexDirection = "column";
+  wrapper.style.maxWidth = "70%";
 
   wrapper.appendChild(bubble);
 
