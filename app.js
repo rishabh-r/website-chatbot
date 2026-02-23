@@ -787,17 +787,27 @@ function showWelcomeCard(name) {
 }
 
 // ── Screen Transitions ───────────────────────────────
+function formatDisplayName(raw) {
+  // Strip email domain if full email (e.g. abc.pqr@gmail.com → abc.pqr)
+  let name = raw.includes("@") ? raw.split("@")[0] : raw;
+  // Take only the first part before a dot (e.g. rishabh.raj → rishabh)
+  name = name.split(".")[0];
+  // Capitalize first letter
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
+
 function showChatScreen(name) {
-  userName    = name;
-  userInitial = name.charAt(0).toUpperCase();
+  const displayName = formatDisplayName(name);
+  userName    = displayName;
+  userInitial = displayName.charAt(0).toUpperCase();
 
   document.getElementById("login-screen").classList.add("hidden");
   document.getElementById("chat-screen").classList.remove("hidden");
 
-  document.getElementById("sidebar-username").textContent = name;
+  document.getElementById("sidebar-username").textContent = displayName;
   document.getElementById("user-avatar").textContent      = userInitial;
 
-  showWelcomeCard(name);
+  showWelcomeCard(displayName);
 }
 
 function handleLogout() {
